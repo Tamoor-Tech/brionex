@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ChevronDown } from "lucide-react";
 import { faqItems } from "../data";
@@ -6,6 +6,16 @@ import { faqItems } from "../data";
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   const reduceMotion = useReducedMotion();
+
+  // Wire up scroll-reveal for any .brx-reveal elements in this section
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("brx-visible"); observer.unobserve(e.target); } }),
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    );
+    document.querySelectorAll(".faq-layout .brx-reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section className="section section-light" id="faq">

@@ -1,7 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import Brand from "./Brand";
+
+function useScrolled(threshold = 20) {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > threshold);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [threshold]);
+  return scrolled;
+}
 
 const links = [
   ["Home", "#home"],
@@ -15,11 +26,12 @@ const links = [
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const reduceMotion = useReducedMotion();
+  const scrolled = useScrolled();
 
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="site-header">
+    <header className={`site-header${scrolled ? " brx-scrolled" : ""}`}>
       <nav className="container navbar" aria-label="Main navigation">
         <Brand />
         <div className="nav-links">
@@ -57,33 +69,45 @@ export function Navbar() {
 }
 
 export function Footer() {
+  const footerLink = (label: string, href: string) => (
+    <a href={href} key={`${label}-${href}`}>
+      <span className="footer-link-arrow" aria-hidden="true">&gt;</span>
+      <span>{label}</span>
+    </a>
+  );
+
   return (
     <footer className="site-footer">
       <div className="container footer-main">
         <div className="footer-brand">
           <Brand />
-          <p>Digital experiences, thoughtfully built for your next chapter.</p>
+          <p>Websites, online stores, mobile apps, and custom software built around your business goals.</p>
           <span className="footer-tagline">Your Vision. Our Code. Global Success.</span>
         </div>
         <div className="footer-column">
           <h2>Explore</h2>
-          <a href="#services">Services</a>
-          <a href="#projects">Projects</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#process">Our process</a>
+          {footerLink("Services", "#services")}
+          {footerLink("Projects", "#projects")}
+          {footerLink("Pricing", "#pricing")}
+          {footerLink("Our process", "#process")}
         </div>
         <div className="footer-column">
           <h2>Services</h2>
-          <a href="#services">Web development</a>
-          <a href="#services">E-commerce</a>
-          <a href="#services">Custom software</a>
-          <a href="#services">AI & automation</a>
+          {footerLink("Web development", "#services")}
+          {footerLink("E-commerce", "#services")}
+          {footerLink("Mobile apps", "#services")}
+          {footerLink("Custom software", "#services")}
+          {footerLink("AI & automation", "#services")}
         </div>
         <div className="footer-column">
           <h2>Let’s talk</h2>
-          <a href="#contact">Request a quote</a>
-          <a href="#faq">Frequently asked questions</a>
-          <a href="#contact">Project enquiry <ArrowUpRight size={13} /></a>
+          {footerLink("Request a quote", "#contact")}
+          {footerLink("Frequently asked questions", "#faq")}
+          <a href="#contact">
+            <span className="footer-link-arrow" aria-hidden="true">&gt;</span>
+            <span>Project enquiry</span>
+            <ArrowUpRight size={14} aria-hidden="true" />
+          </a>
         </div>
       </div>
       <div className="container footer-bottom">

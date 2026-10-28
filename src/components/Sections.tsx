@@ -7,7 +7,6 @@ import {
   BadgeDollarSign,
   Check,
   CircleCheck,
-  Compass,
   Headphones,
   MessageCircle,
   MoveUpRight,
@@ -16,6 +15,27 @@ import {
 } from "lucide-react";
 import { additionalPrices, monthlyPlans, pricingPlans, processSteps, projects, services } from "../data";
 import ContactForm from "./ContactForm";
+
+/* Scroll-reveal observer: adds .brx-visible to .brx-reveal elements when in view */
+function useReveal() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("brx-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    );
+    const elements = document.querySelectorAll(".brx-reveal");
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
+
 
 export function Hero() {
   const reduceMotion = useReducedMotion();
@@ -79,7 +99,6 @@ export function Hero() {
               <span>DESIGNED FOR THE IN BETWEEN.</span>
             </div>
           </div>
-          <div className="visual-caption-chip"><span><Compass size={15} /></span><span>CREATED WITH INTENTION<small>Designed around your next big idea.</small></span></div>
         </motion.div>
       </div>
       <div className="container trust-strip">
@@ -97,10 +116,11 @@ export function Hero() {
 }
 
 export function Services() {
+  useReveal();
   return (
     <section className="section section-light" id="services">
       <div className="container">
-        <div className="section-heading">
+        <div className="section-heading brx-reveal">
           <div>
             <span className="eyebrow"><span className="eyebrow-dot" /> WHAT WE DO</span>
             <h2 className="section-title">The right digital<br />tools for your <span className="text-lime-dark">next move.</span></h2>
@@ -111,7 +131,7 @@ export function Services() {
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
-              <article className={`service-card ${index === 0 ? "service-card-featured" : ""}`} key={service.title}>
+              <article className={`service-card brx-reveal brx-delay-${Math.min(index + 1, 5)} ${index === 0 ? "service-card-featured" : ""}`} key={service.title}>
                 <div className="service-card-top"><span className="service-icon"><Icon size={20} strokeWidth={1.7} /></span><span className="card-index">0{index + 1}</span></div>
                 <h3>{service.title}</h3>
                 <p>{service.description}</p>
@@ -132,16 +152,17 @@ export function Services() {
 }
 
 export function Projects() {
+  useReveal();
   return (
     <section className="section section-white" id="projects">
       <div className="container">
-        <div className="section-heading">
+        <div className="section-heading brx-reveal">
           <div><span className="eyebrow"><span className="eyebrow-dot" /> THE WORK, IN CONCEPT</span><h2 className="section-title">Good ideas deserve<br /><span className="text-lime-dark">great digital homes.</span></h2></div>
           <p>A glimpse of the digital experiences we can create. Each preview is clearly identified as a concept—not presented as commissioned client work.</p>
         </div>
         <div className="projects-grid">
           {projects.map((project, index) => (
-            <article className={`project-card project-card-${index + 1}`} key={project.name}>
+            <article className={`project-card project-card-${index + 1} brx-reveal brx-delay-${index + 1}`} key={project.name}>
               <div className="project-image-wrap">
                 <img src={project.image} alt={project.alt} loading="lazy" />
                 <span className="project-label">{project.label}</span>
@@ -151,24 +172,25 @@ export function Projects() {
             </article>
           ))}
         </div>
-        <p className="projects-note">Concept imagery is illustrative; no client engagement or project results are implied.</p>
+        <p className="projects-note brx-reveal">Concept imagery is illustrative; no client engagement or project results are implied.</p>
       </div>
     </section>
   );
 }
 
 export function Pricing() {
+  useReveal();
   return (
     <>
       <section className="section pricing-section" id="pricing">
         <div className="container">
-          <div className="section-heading">
+          <div className="section-heading brx-reveal">
             <div><span className="eyebrow"><span className="eyebrow-dot" /> INVEST WITH CLARITY</span><h2 className="section-title">Simple pricing.<br /><span className="text-lime-dark">Clear expectations.</span></h2></div>
             <p>A starting point for the conversation. We’ll confirm your project’s scope, deliverables, and timeline before work begins.</p>
           </div>
           <div className="pricing-grid">
-            {pricingPlans.map((plan) => (
-              <article className={`pricing-card ${plan.recommended ? "pricing-card-recommended" : ""}`} key={plan.name}>
+            {pricingPlans.map((plan, index) => (
+              <article className={`pricing-card brx-reveal brx-delay-${index + 1} ${plan.recommended ? "pricing-card-recommended" : ""}`} key={plan.name}>
                 {plan.recommended ? <span className="recommended-pill">A GOOD PLACE TO START</span> : null}
                 <div className="pricing-card-heading"><h3>{plan.name}</h3><p>{plan.description}</p></div>
                 <div className="pricing-amount">{plan.price === "Let's scope it" ? <span className="price-custom">{plan.price}</span> : <><strong>{plan.price}</strong><span>one-time · starting at</span></>}</div>
@@ -181,7 +203,7 @@ export function Pricing() {
               </article>
             ))}
           </div>
-          <p className="pricing-disclaimer">Domain, hosting, paid tools, third-party subscriptions, complex backend work, and major scope changes may be charged separately. Final pricing depends on agreed requirements.</p>
+          <p className="pricing-disclaimer brx-reveal">Domain, hosting, paid tools, third-party subscriptions, complex backend work, and major scope changes may be charged separately. Final pricing depends on agreed requirements.</p>
         </div>
       </section>
       <AdditionalPricing />
@@ -226,12 +248,13 @@ function MonthlyPricing() {
 }
 
 export function Process() {
+  useReveal();
   return (
     <section className="section process-section" id="process">
       <div className="container">
-        <div className="section-heading"><div><span className="eyebrow"><span className="eyebrow-dot" /> NO GUESSWORK</span><h2 className="section-title">A clear process<br />from idea to <span className="text-lime-dark">launch.</span></h2></div><p>Good work starts with a shared understanding. Every project has clear steps and agreed expectations.</p></div>
+        <div className="section-heading brx-reveal"><div><span className="eyebrow"><span className="eyebrow-dot" /> NO GUESSWORK</span><h2 className="section-title">A clear process<br />from idea to <span className="text-lime-dark">launch.</span></h2></div><p>Good work starts with a shared understanding. Every project has clear steps and agreed expectations.</p></div>
         <div className="process-grid">
-          {processSteps.map(([number, title, description], index) => <article className="process-step" key={number}><div className="process-step-top"><span>{number}</span>{index < processSteps.length - 1 ? <span className="process-connector" /> : null}</div><h3>{title}</h3><p>{description}</p></article>)}
+          {processSteps.map(([number, title, description], index) => <article className={`process-step brx-reveal brx-delay-${index + 1}`} key={number}><div className="process-step-top"><span>{number}</span>{index < processSteps.length - 1 ? <span className="process-connector" /> : null}</div><h3>{title}</h3><p>{description}</p></article>)}
         </div>
       </div>
     </section>
@@ -239,12 +262,13 @@ export function Process() {
 }
 
 export function Commitment() {
+  useReveal();
   const commitments = ["Clear communication", "Agreed project scope", "Responsive design", "Transparent pricing", "Quality-focused delivery"];
   return (
     <section className="commitment-section" id="testimonials">
       <div className="container commitment-layout">
-        <div className="commitment-copy"><span className="eyebrow eyebrow-dark"><span className="eyebrow-dot" /> A PROMISE WE CAN KEEP</span><h2>Good work.<br />No guesswork.</h2><p>We’d rather earn your trust with a clear plan and thoughtful execution than make promises we can’t stand behind.</p><a className="button button-lime" href="#contact">Let’s talk about your project <ArrowUpRight size={17} /></a></div>
-        <div className="commitment-list">{commitments.map((item, index) => <div className="commitment-item" key={item}><span>0{index + 1}</span><strong>{item}</strong><Check size={17} /></div>)}</div>
+        <div className="commitment-copy brx-reveal"><span className="eyebrow eyebrow-dark"><span className="eyebrow-dot" /> A PROMISE WE CAN KEEP</span><h2>Good work.<br />No guesswork.</h2><p>We’d rather earn your trust with a clear plan and thoughtful execution than make promises we can’t stand behind.</p><a className="button button-lime" href="#contact">Let’s talk about your project <ArrowUpRight size={17} /></a></div>
+        <div className="commitment-list">{commitments.map((item, index) => <div className={`commitment-item brx-reveal brx-delay-${index + 1}`} key={item}><span>0{index + 1}</span><strong>{item}</strong><Check size={17} /></div>)}</div>
         <span className="commitment-watermark" aria-hidden="true">B.</span>
       </div>
     </section>
