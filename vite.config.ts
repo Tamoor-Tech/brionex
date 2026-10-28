@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
 
   // GitHub Pages repository path
-  base: "/brionex/",
+  base: "/",
 
   build: {
     rollupOptions: {
