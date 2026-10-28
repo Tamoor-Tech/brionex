@@ -30,13 +30,13 @@ export function Hero() {
           transition={{ duration: reduceMotion ? 0 : 0.62, ease: "easeOut" }}
         >
           <span className="eyebrow hero-eyebrow"><span className="eyebrow-dot" /> DIGITAL SOLUTIONS FOR AMBITIOUS BUSINESSES</span>
-          <h1>Build your <span>Digital Future</span> with BRIONEX.</h1>
+          <h1>We build digital experiences that move <span>businesses forward.</span></h1>
           <p className="hero-description">
-            We build modern websites, powerful online stores, mobile apps, and custom software that help businesses grow. From your first idea to launch and beyond, BRIONEX turns your vision into a practical digital solution.
+            From high-performance websites and custom software to mobile apps and intelligent automation, BRIONEX helps turn ambitious ideas into practical digital solutions.
           </p>
           <div className="hero-actions">
-            <a className="button button-lime" href="#contact">Get started <ArrowUpRight size={18} /></a>
-            <a className="button button-outline" href="#services">Explore our services <ArrowDown size={16} /></a>
+            <a className="button button-lime" href="#contact">Start your project <ArrowUpRight size={18} /></a>
+            <a className="button button-outline" href="#projects">Explore our work <ArrowDown size={16} /></a>
           </div>
           <div className="hero-signature">
             <span className="signature-icon"><Sparkles size={16} /></span>
@@ -137,7 +137,7 @@ export function Projects() {
       <div className="container">
         <div className="section-heading">
           <div><span className="eyebrow"><span className="eyebrow-dot" /> THE WORK, IN CONCEPT</span><h2 className="section-title">Good ideas deserve<br /><span className="text-lime-dark">great digital homes.</span></h2></div>
-          <p>These visual concepts show the kind of considered digital experiences we love to create. They are illustrative concepts, not commissioned client projects.</p>
+          <p>A glimpse of the digital experiences we can create. Each preview is clearly identified as a concept—not presented as commissioned client work.</p>
         </div>
         <div className="projects-grid">
           {projects.map((project, index) => (

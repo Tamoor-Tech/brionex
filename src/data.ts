@@ -2,6 +2,7 @@ import {
   AppWindow,
   Bot,
   Code2,
+  Figma,
   Gauge,
   Globe2,
   Layers3,
@@ -78,6 +79,12 @@ export const services: Service[] = [
     description: "Practical AI interactions and workflow automation, thoughtfully applied.",
     icon: Bot,
     features: ["Customer-facing chat flows", "Workflow automation", "Relevant AI integrations"],
+  },
+  {
+    title: "UI/UX Design",
+    description: "Clear, considered interfaces that make digital products easier to understand and use.",
+    icon: Figma,
+    features: ["User flows & wireframes", "Responsive interface design", "Prototyping & refinement"],
   },
   {
     title: "Search Engine Optimization",
@@ -208,6 +215,14 @@ export const processSteps = [
 
 export const faqItems: FAQItem[] = [
   {
+    question: "What services does BRIONEX Technologies provide?",
+    answer: "We work on responsive websites, e-commerce, website redesigns, web and mobile applications, custom software, UI/UX design, AI automation, SEO, digital marketing, and ongoing website care.",
+  },
+  {
+    question: "How do we start a project?",
+    answer: "Share your goals, preferred service, budget, timeline, and any useful references in the project enquiry form. We can then discuss the requirements and agree on a clear scope before work begins.",
+  },
+  {
     question: "How much does a BRIONEX website cost?",
     answer: "Starter Website packages begin at $149, Business Websites at $299, and Premium Websites at $499. E-commerce, custom software, and other advanced projects are scoped individually. Final pricing depends on pages, functionality, integrations, and requirements.",
   },
@@ -254,5 +269,9 @@ export const faqItems: FAQItem[] = [
   {
     question: "How can I request a quotation?",
     answer: "Use the project form below to share the service, budget, timeline, and requirements. Once form submission is connected to an active contact endpoint, we can receive and review your enquiry.",
+  },
+  {
+    question: "What information should I include in a project enquiry?",
+    answer: "A short description of what you want to build or improve, who it is for, your preferred timeline, an estimated budget, and any relevant examples will help us understand your needs.",
   },
 ];

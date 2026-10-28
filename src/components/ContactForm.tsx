@@ -9,6 +9,7 @@ const services = [
   "E-commerce",
   "Website Redesign",
   "Mobile App",
+  "UI/UX Design",
   "Custom Software",
   "AI Chatbot / Automation",
   "SEO",
